@@ -1,3 +1,4 @@
+import { Search, ShoppingBasket } from '@mui/icons-material'
 import React from 'react'
 import "../css/Header.css"
 const Header = () => {
@@ -13,6 +14,7 @@ const Header = () => {
                     className="header_searchInput"
                     type="text"
                 />
+                <Search className="header_searchIcon" />
             </div>
             <div className="header_nav">
                  <div className="header_option">
@@ -39,6 +41,12 @@ const Header = () => {
                            Prime
                        </span>
                  </div>
+                <div className="header_optionBasket">
+                    <ShoppingBasket />
+                    <span className="header_optionLineTwo header_basketCount">
+                           0
+                       </span>
+                </div>
             </div>
         </div>
     )
