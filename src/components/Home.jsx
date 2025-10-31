@@ -1,14 +1,28 @@
 import React from 'react'
 import '../css/Home.css'
+import Product from "./Product.jsx";
 const Home = () => {
     return (
         <div className="home">
             <div className="home_container">
                <img
                    className="home_image"
-                   src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generics/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
-                   alt="amazon banner"
+                   src="https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg"
+                   alt=""
                />
+            </div>
+            <div className="home_row">
+                <Product />
+                {/*<Product />*/}
+            </div>
+            <div className="home_row">
+                {/*
+                <Product/>
+                <Product/>
+                <Product/>*/}
+            </div>
+            <div className="home_row">
+                {/*<Product />*/}
             </div>
         </div>
     )
