@@ -7,8 +7,8 @@
     padding: 20px;
     width: 100%;
     max-height: 400px;
-    min-height: 100px;
-    background-color: #fff;
+    min-width: 100px;
+    background-color: white;
     z-index: 1;
 }
 .product > img {
@@ -19,6 +19,7 @@
 }
 
 .product > button {
+    white-space: nowrap;
     background: #f0c14b ;
     border: 1px solid;
     margin-top: 10px;
@@ -28,6 +29,10 @@
 
 .product_price {
     margin-top: 5px;
+}
+
+.product_rating {
+    display: flex;
 }
 
 .product_info {
