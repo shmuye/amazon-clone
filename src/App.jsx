@@ -6,20 +6,10 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 const App = () => {
     return (
         <Router>
+            <Header />
             <Routes>
-                <Route path="/" element={
-                    <div>
-                        <Header />
-                        <Home />
-                    </div>
-                } />
-                <Route path="/Checkout" element={
-                    <>
-                        <Header />
-                        <Checkout />
-                    </>
-
-                }/>
+                <Route path="/" element={ <Home /> } />
+                <Route path="/Checkout" element={ <Checkout /> }/>
             </Routes>
         </Router>
 
