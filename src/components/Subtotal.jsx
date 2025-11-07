@@ -1,17 +1,24 @@
 import React from 'react';
 import "../css/Subtotal.css";
+import {useStateValue} from "./StateProvider.jsx";
+import { getBasketTotal } from "../reducer.js";
 
 const Subtotal = () => {
+    const [{ basket }] = useStateValue();
+
 
     const formattedValue = new Intl.NumberFormat("en-UK", {
         style: "currency",
-        currency: "GBP",
-    }).format(0);
+        currency: "USD",
+        currencyDisplay: "narrowSymbol",
+    }).format(
+       getBasketTotal(basket)
+    );
 
     return (
         <div className="subtotal">
             <p>
-                Subtotal (0 items):
+                Subtotal ({ basket?.length} items):
                 <strong> {formattedValue}</strong>
             </p>
 
