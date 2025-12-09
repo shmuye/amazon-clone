@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import {Link} from "react-router-dom"
-import "../css/Login.css"
-import {auth} from "../firebase.js";
+import {Link, useNavigate} from "react-router-dom"
+import '../css/login.css'
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const LoginPage = () => {
+    const navigate = useNavigate()
     const [email, setEmail] =  useState("")
     const [password, setPassword] = useState("")
 
@@ -16,12 +17,20 @@ const LoginPage = () => {
 
     const signIn = (e) => {
         e.preventDefault()
+        signInWithEmailAndPassword(email,password)
+            .then(auth => {
+                console.log(auth)
+                navigate('/')
+            }).catch(error => alert(error.message))
     }
     const register = (e) => {
         e.preventDefault()
-        auth.createUserWithEmailAndPassword(email, password).
+        createUserWithEmailAndPassword(email, password).
             then(auth => {
                 console.log(auth)
+                if(auth){
+                    navigate('/')
+                }
         }).catch(error => {
             alert(error.message)
         })
@@ -47,7 +56,7 @@ const LoginPage = () => {
                       <label>Password</label>
                       <input
                              onChange={handlePasswordChange}
-                             type="text"
+                             type="password"
                              value={password} />
                       <button
                           onClick={signIn}
