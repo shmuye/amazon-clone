@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import Header from './components/Header';
+import Header from './components/Header';   
 import Home from './components/Home';
 import Checkout from './components/Checkout';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import LoginPage from "./components/LoginPage.jsx";
+import Auth from "./components/Auth.jsx";
+import { auth } from './firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useStateValue } from './components/StateProvider.jsx';
 
@@ -13,20 +14,21 @@ const App = () => {
     const [ {}, dispatch ] = useStateValue()
 
     useEffect(()=>{
-       onAuthStateChanged(authUser => {
-        console.log(authUser)
+       onAuthStateChanged(auth, authUser => {
+
+        console.log("the user is >>> ", authUser)
 
         if(authUser){
 
             dispatch({
-                type: SET_USER,
+                type: "SET_USER",
                 user: authUser
             })
 
         }else {
 
             dispatch({
-                type: SET_USER,
+                type: "SET_USER",
                 user: null
             })
 
@@ -37,7 +39,7 @@ const App = () => {
         <Router>
 
             <Routes>
-                <Route path="/login" element={ <LoginPage /> } />
+                <Route path="/login" element={ <Auth /> } />
                 <Route path="/" element={
                     <>
                         <Header/>

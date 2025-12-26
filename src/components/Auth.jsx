@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from "react-router-dom"
-import '../css/login.css'
+import '../css/Auth.css'
+import { auth } from '../firebase.js'
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
-const LoginPage = () => {
+
+
+const Auth = () => {
     const navigate = useNavigate()
     const [email, setEmail] =  useState("")
     const [password, setPassword] = useState("")
@@ -17,7 +20,7 @@ const LoginPage = () => {
 
     const signIn = (e) => {
         e.preventDefault()
-        signInWithEmailAndPassword(email,password)
+        signInWithEmailAndPassword(auth,email,password)
             .then(auth => {
                 console.log(auth)
                 navigate('/')
@@ -25,8 +28,8 @@ const LoginPage = () => {
     }
     const register = (e) => {
         e.preventDefault()
-        createUserWithEmailAndPassword(email, password).
-            then(auth => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(auth => {
                 console.log(auth)
                 if(auth){
                     navigate('/')
@@ -75,4 +78,4 @@ const LoginPage = () => {
         </div>
     )
 }
-export default LoginPage
+export default Auth
