@@ -5,6 +5,7 @@ import "../css/Header.css"
 import { auth } from '../firebase.js'
 import { signOut } from 'firebase/auth'
 import {useStateValue} from "./StateProvider.jsx";
+import { getUserName } from '../utils/getUserName.js';
 
 const Header = () => {
     const [{ basket, user }] = useStateValue()
@@ -16,12 +17,7 @@ const Header = () => {
             })
         }
     }
-    const getUserName = (user) => {
-        if(!user) return null
-        const email = user.email
-        return email.substring(0, email.indexOf('@'))
-    }
-    const userName = getUserName(user)
+
     return (
         <div className="header">
             <Link to="/">

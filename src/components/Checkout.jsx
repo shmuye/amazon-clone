@@ -3,8 +3,9 @@ import "../css/Checkout.css"
 import Subtotal from "./Subtotal.jsx";
 import {useStateValue} from "./StateProvider.jsx";
 import CheckoutProduct from "./CheckoutProduct.jsx";
+import { getUserName } from '../utils/getUserName.js';  
 const Checkout = () => {
-    const [{ basket }, dispatch] = useStateValue()
+    const [{ basket, user }, dispatch] = useStateValue()
     return (
         <div className="checkout">
             <div className="checkout_left">
@@ -14,6 +15,7 @@ const Checkout = () => {
                       alt=""
                   />
                 <div className="checkout_right">
+                    <h3>Hello {getUserName(user)}</h3>
                     <h2 className="checkout_title">Your Shopping Basket</h2>
                     {
                         basket.map(item => (
