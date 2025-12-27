@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import "../css/Subtotal.css";
 import {useStateValue} from "./StateProvider.jsx";
 import { getBasketTotal } from "../reducer.js";
 
+
 const Subtotal = () => {
     const [{ basket }] = useStateValue();
+    const navigate = useNavigate();
 
 
     const formattedValue = new Intl.NumberFormat("en-UK", {
@@ -27,7 +30,9 @@ const Subtotal = () => {
                 This order contains a gift
             </small>
 
-            <button>Proceed to Checkout</button>
+            <button
+            onClick={e => navigate("/payment")} 
+            >Proceed to Checkout</button>
         </div>
     );
 };

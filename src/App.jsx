@@ -7,9 +7,14 @@ import Auth from "./components/Auth.jsx";
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useStateValue } from './components/StateProvider.jsx';
+import Payment from './components/Payment.jsx';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 
-const App = () => {
+const App = () => { 
 
     const [ {}, dispatch ] = useStateValue()
 
@@ -50,6 +55,14 @@ const App = () => {
                     <>
                         <Header/>
                         <Checkout/>
+                    </> 
+                }/>
+                <Route path="/payment" element={
+                    <>
+                        <Header/>   
+                        <Elements stripe={promise}>        
+                            <Payment/>
+                        </Elements>
                     </>
                 }/>
             </Routes>
