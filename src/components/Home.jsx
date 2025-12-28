@@ -1,15 +1,53 @@
 import React from 'react'
 import '../css/Home.css'
 import Product from "./Product.jsx";
+import { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 const Home = () => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const Images = [
+        "https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg",
+        "https://m.media-amazon.com/images/I/71GGl3UpyOL._SX3000_.jpg",
+        "https://m.media-amazon.com/images/I/71qcoYgEhzL._SX3000_.jpg",
+    ];
+
+   /* useEffect(() => {
+         const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Images.length);
+         }, 5000 );
+         return () => clearInterval(interval);
+    }, []) */
+
+    const prevImage = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === 0 ? Images.length - 1 : prevIndex - 1
+        );
+    }   
+    const nextImage = () =>  {
+        setCurrentImageIndex((prevIndex) =>
+            (prevIndex + 1) % Images.length
+        );  
+    }
     return (
         <div className="home">
-            <div className="home_container">
+            <div 
+               className="home_container">
+                <div 
+                 onClick={prevImage}
+                 className="slider_arrow left">
+                    <ChevronLeft />
+                </div>
                <img
                    className="home_image"
-                   src="https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg"
-                   alt=""
-               />
+                   src={Images[currentImageIndex]}
+                   alt="Home Banner"        
+            />
+                <div 
+                   onClick={nextImage}
+                   className="slider_arrow right">
+                    <ChevronRight />
+                </div>  
             </div>
             <div className="home_row">
                 <Product

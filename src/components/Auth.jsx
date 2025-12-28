@@ -48,7 +48,7 @@ const Auth = () => {
             />
             </Link>
             <div className="login_container">
-                  <h1>Sign-in</h1>
+                  <h2>Sign In</h2>
                   <form>
                       <label>Email</label>
                       <input
@@ -64,7 +64,7 @@ const Auth = () => {
                       <button
                           onClick={signIn}
                           className="login_signInButton"
-                          type="submit">Sign-in</button>
+                          type="submit">Sign in</button>
                   </form>
                 <p>
                     By signing-in you agree to Amazon clone's Conditions of Use and Sale. Please see our Privacy Notice,
