@@ -22,6 +22,24 @@ app.get("/", (req, res) => {
   res.status(200).send("Hello from Firebase!");
 });
 
+app.post("/payments/create", async (req, res) => {
+    const total = Number(req.query.total);
+
+    console.log("Payment request received for this amount >>> ", total);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: total, // subunits of the currency
+        currency: "usd",
+    });
+
+    // OK - Created
+    res.status(201).send({
+        clientSecret: paymentIntent.client_secret,
+    });
+});
+
+
+
 // listen command 
 
 exports.api = functions.https.onRequest(app);

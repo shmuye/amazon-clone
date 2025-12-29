@@ -14,8 +14,8 @@ const Payment = () => {
     const [error, setError] = React.useState(null);
     const [disabled, setDisabled] = useState(true);
     const [succeeded, setSucceeded] = useState(false);
-    const [processing, setProcessing] = useState("");
-    const [clientSecret, setClientSecret] = useState(true);
+    const [processing, setProcessing] = useState(false);
+    const [clientSecret, setClientSecret] = useState("");
 
     const navigate = useNavigate();
 
@@ -32,6 +32,8 @@ const Payment = () => {
         
         getClientSecret();
     }, [basket]); 
+
+    console.log("The Secret is >>> ", clientSecret);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -52,6 +54,10 @@ const Payment = () => {
             setSucceeded(true);
             setError(null);
             setProcessing(false); 
+
+            dispatch({
+                type: 'EMPTY_BASKET'
+            }); 
 
             navigate('/orders');
 

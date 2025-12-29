@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Header from './components/Header';   
 import Home from './components/Home';
+import Orders from './components/Orders.jsx';
 import Checkout from './components/Checkout';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Auth from "./components/Auth.jsx";
@@ -44,6 +45,12 @@ const App = () => {
         <Router>
 
             <Routes>
+                <Route path="/orders" element={ 
+                    <>
+                      <Header />
+                      <Orders /> 
+                    </>
+                 } />
                 <Route path="/login" element={ <Auth /> } />
                 <Route path="/" element={
                     <>
