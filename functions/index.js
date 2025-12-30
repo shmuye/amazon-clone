@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/payments/create", async (req, res) => {
-    const total = Number(req.query.total);
+    const total = parseInt(req.query.total);
 
     console.log("Payment request received for this amount >>> ", total);
 

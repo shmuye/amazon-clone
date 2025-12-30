@@ -6,8 +6,9 @@ import "../css/Payment.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { getBasketTotal } from '../reducer.js';
+import { db } from '../firebase.js';
+import { collection, doc, setDoc } from "firebase/firestore";
 import axios from '../axios.js';
-
 
 const Payment = () => {
     const [{ basket, user }, dispatch ] = useStateValue(); 
@@ -20,21 +21,22 @@ const Payment = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if(basket.length === 0) {
+            return;
+        }
         // Generate the special stripe secret which allows us to charge a customer
         const getClientSecret = async () => {
           const response = await axios({
                 method: 'post',
             //     // Stripe expects the total in a currencies subunits
-                url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+                url: `/payments/create?total=${Math.round(getBasketTotal(basket) * 100)}`,
             });
             setClientSecret(response.data.clientSecret);
         } ;   
         
         getClientSecret();
     }, [basket]); 
-
-    console.log("The Secret is >>> ", clientSecret);
-
+    
     const stripe = useStripe();
     const elements = useElements();
 
@@ -42,14 +44,41 @@ const Payment = () => {
         e.preventDefault(); 
         setProcessing(true);
 
+        if (!clientSecret || !stripe || !elements) {
+            console.error("Stripe not ready");
+            setProcessing(false);
+            return;
+        }
+    
+
+
         // Here you would normally call your backend to create a PaymentIntent
         // and confirm the payment with Stripe. For this example, we'll skip that part.
-        const payload = await stripe.confirmCardPayment(clientSecret, {
+        const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement)
             }
-        }).then(({ paymentIntent }) => {
+        })
+
+        if (result.error) {
+              setError(result.error.message);
+              setProcessing(false);
+              return;
+        }
+
+        const paymentIntent = result.paymentIntent;
+
             // paymentIntent = payment confirmation
+
+        const orderRef = doc(collection(db, 'users', user?.uid, 'orders'), paymentIntent.id);
+
+        await setDoc(orderRef, {
+                basket: basket,
+                amount: paymentIntent.amount,
+                created: paymentIntent.created
+            });
+
+        
 
             setSucceeded(true);
             setError(null);
@@ -62,8 +91,8 @@ const Payment = () => {
             navigate('/orders');
 
             // You can also dispatch an action to clear the basket or update your state here
-        }); 
-    }
+        }; 
+    
     const handleChange = e => {
         // Listen for changes in the CardElement
         // and display any errors as the customer types their card details
@@ -79,9 +108,10 @@ const Payment = () => {
         }).format(
            getBasketTotal(basket)
         );
-   
 
-  return (
+         
+
+return (
     <div className='payment'>
         <div className='payment_container'>
             <h1>
@@ -104,6 +134,7 @@ const Payment = () => {
             <div className="payment_items">
                 {basket.map(item => (
                     <CheckoutProduct
+                      key={item.id}
                       id={item.id}
                       title={item.title}
                       image={item.image}
@@ -124,7 +155,7 @@ const Payment = () => {
                   <CardElement onChange={handleChange} />
                   <div className="payment_priceContainer">
                     <h3>Order Total: {formattedValue}</h3>
-                    <button disabled={processing || disabled || succeeded}>
+                    <button disabled={processing || disabled || succeeded || !clientSecret}>
                         <span>
                           {
                             processing ? (
@@ -144,5 +175,4 @@ const Payment = () => {
     </div>
   )
 }
-
 export default Payment
