@@ -8,7 +8,7 @@ import {useStateValue} from "./StateProvider.jsx";
 import { getUserName } from '../utils/getUserName.js';
 
 const Header = () => {
-    const [{ basket, user }] = useStateValue()
+    const [{ basket, user, searchTerm }, dispatch] = useStateValue()
 
     const handleSignOut = () => {
         if(user){
@@ -16,6 +16,13 @@ const Header = () => {
                 alert("Signed out successfully")
             })
         }
+    }
+
+    const handleSearch = (e) => {
+        dispatch({
+            type: "SET_SEARCH_TERM",
+            searchTerm: e.target.value
+        })
     }
 
     return (
@@ -29,8 +36,11 @@ const Header = () => {
             </Link>
             <div className="header_search">
                 <input
+                    value={searchTerm}
+                    onChange={handleSearch}
                     className="header_searchInput"
                     type="text"
+                    placeholder='Search Products'
                 />
                 <Search className="header_searchIcon" />
             </div>

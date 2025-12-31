@@ -17,7 +17,7 @@ const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const App = () => { 
 
-    const [ {}, dispatch ] = useStateValue()
+    const [ { searchTerm }, dispatch ] = useStateValue()
 
     useEffect(()=>{
        onAuthStateChanged(auth, authUser => {
@@ -55,7 +55,7 @@ const App = () => {
                 <Route path="/" element={
                     <>
                         <Header/>
-                        <Home/>
+                        <Home searchTerm={searchTerm}/>
                     </>
                 }/>
                 <Route path="/Checkout" element={
