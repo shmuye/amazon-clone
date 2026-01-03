@@ -11,6 +11,9 @@ import { useStateValue } from './components/StateProvider.jsx';
 import Payment from './components/Payment.jsx';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import ProductDetail from './components/ProductDetail.jsx';
+import Footer from './components/Footer.jsx';
+
 
 const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -56,6 +59,7 @@ const App = () => {
                     <>
                         <Header/>
                         <Home searchTerm={searchTerm}/>
+                        <Footer />
                     </>
                 }/>
                 <Route path="/Checkout" element={
@@ -72,6 +76,13 @@ const App = () => {
                         </Elements>
                     </>
                 }/>
+                <Route path='/product/:id' element={
+                    <>
+                      <Header />
+                      <ProductDetail />
+                    </>
+                   
+                } />
             </Routes>
         </Router>
 

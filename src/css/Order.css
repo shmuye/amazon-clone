@@ -1,19 +1,57 @@
 .order {
     border: 1px solid lightgray;
-    padding: 40px;
-    margin: 20px 0;
+    padding: 30px;
     background-color: white;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
+/* Order header */
+.order h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Order meta info */
+.order p {
+    font-size: 14px;
+}
+
+/* Order ID (top-right like Amazon) */
 .order_id {
     position: absolute;
-    top: 40px;
+    top: 20px;
     right: 20px;
-
+    font-size: 12px;
 }
 
+/* Products inside an order */
+.order > div {
+    margin-top: 10px;
+}
+
+/* Order total */
 .order_total {
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     text-align: right;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .order {
+        padding: 20px;
+    }
+
+    .order_id {
+        position: static;
+        margin-top: 5px;
+    }
+
+    .order_total {
+        text-align: left;
+    }
 }

@@ -12,6 +12,7 @@
 
     background-color: white;
     z-index: 1;
+    cursor: pointer;
 }
 
 .product > img {
@@ -41,6 +42,11 @@
 .product_info {
     height: 100px;
     margin-bottom: 15px;
+}
+
+.product_title {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
