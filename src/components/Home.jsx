@@ -39,7 +39,9 @@ const filteredProducts =
                 <div 
                  onClick={prevImage}
                  className="slider_arrow left">
-                    <ChevronLeft />
+                    <ChevronLeft 
+                    color='#888'
+                       sx = {{ fontSize: 64 }} />
                 </div>
                <img
                    className="home_image"
@@ -49,7 +51,10 @@ const filteredProducts =
                 <div 
                    onClick={nextImage}
                    className="slider_arrow right">
-                    <ChevronRight />
+                    <ChevronRight
+                       color='#888'
+                       sx = {{ fontSize: 64 }}
+                     />
                 </div>  
             </div>
 

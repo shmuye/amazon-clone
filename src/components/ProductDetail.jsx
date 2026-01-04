@@ -24,6 +24,7 @@ const ProductDetail = () => {
                         <p key={i}>⭐</p>
                     ))
                 }
+               
 
             </div>
         <p className="description">{product.description}</p>

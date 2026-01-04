@@ -1,5 +1,5 @@
     export const products = [{
-        id: "120784",
+        id: "1",
         title: "The Lean Startup",
         description: "How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses",
         price: 19.99,
@@ -9,7 +9,7 @@
     },
     
     {
-        id: "120786",
+        id: "2",
         title: "Atomic Habits: ",
         description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
         price: 16.99,
@@ -18,7 +18,7 @@
      },
 
      {
-        id: "120787",
+        id: "3",
         title: "Canon EOS Rebel T7 DSLR Camera",
         description: "Canon EOS Rebel T7 DSLR Camera with 18-55mm Lens | Built-in Wi-Fi | 24.1 MP CMOS Sensor | DIGIC 4+ Image Processor and Full HD Videos",
         rating: 4,
@@ -28,7 +28,7 @@
      },
 
        { 
-       id: "120785",
+       id: "4",
        title: "Zero to One",
        description: "Notes on Startups, or How to Build the Future",
        price: 21.99,
@@ -38,7 +38,7 @@
      },
 
       {
-        id: "120786",
+        id: "5",
         title: "Atomic Habits: ",
         description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
         price: 16.99,
@@ -47,7 +47,7 @@
      },
 
      {
-        id: "120787",
+        id: "6",
         title: "Canon EOS Rebel T7 DSLR Camera",
         description: "Canon EOS Rebel T7 DSLR Camera with 18-55mm Lens | Built-in Wi-Fi | 24.1 MP CMOS Sensor | DIGIC 4+ Image Processor and Full HD Videos",
         rating: 4,
@@ -57,7 +57,7 @@
      },
 
        { 
-       id: "120785",
+       id: "7",
        title: "Zero to One",
        description: "Notes on Startups, or How to Build the Future",
        price: 21.99,

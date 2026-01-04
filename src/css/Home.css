@@ -16,18 +16,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    
-    width: 100px;
-    height: 100px;
-
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* background-color: rgba(0, 0, 0, 0.6); */
-    color: darkgray;
-
-    border-radius: 50%;
     cursor: pointer;
     z-index: 2;
 }
@@ -60,7 +49,7 @@
 .home_image {
     width: 100%;
     z-index: -1;
-    margin-bottom: -150px;
+    margin-bottom: -250px;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
@@ -71,4 +60,35 @@
     font-size: 18px;
     color: #555;
 }
+
+/* 📱 Tablets and small devices */
+@media (max-width: 768px) {
+  .home_image {
+    margin-bottom: -120px; /* reduce overlap */
+    min-height: 300px;
+    object-fit: cover;
+  }
+
+  .slider_arrow {
+    top: 55%; /* push arrows slightly down */
+  }
+}
+
+/* 📱 Phones */
+@media (max-width: 480px) {
+  .home_image {
+    margin-bottom: 0;      /* remove negative margin */
+    min-height: 220px;
+  }
+
+  .slider_arrow {
+    top: 60%;
+  }
+
+  .slider_arrow  {
+    font-size: 32px; 
+  }
+}
+
+
 
