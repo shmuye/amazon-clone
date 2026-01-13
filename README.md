@@ -1,6 +1,6 @@
 # Amazon Clone Application
 
-A **responsive full-stack Amazon clone** application with full authentication (create an account and sign in) using **Firebase**, product browsing, product details view, checkout, order management, and Stripe payment integration.  
+A **responsive full-stack Amazon clone** application with full authentication (signup and sign in and logout) using **Firebase**, product browsing, product details view, checkout, order management, and Stripe payment integration.  
 
 ---
 
