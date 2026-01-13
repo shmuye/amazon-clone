@@ -47,3 +47,5 @@ Follow these steps to run the project locally:
 
 4. **Start the Firebase backend emulator**
 
+   firebase emulators:start 
+
