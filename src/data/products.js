@@ -39,11 +39,12 @@
 
       {
         id: "5",
-        title: "Atomic Habits: ",
-        description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+        title: "Head Phone ",
+        description: "Soundcore by Anker Q20i Hybrid Active Noise Cancelling Headphones " + 
+          "Wireless Over-Ear Bluetooth, 40H Long ANC Playtime, Hi-Res Audio, Big Bass, Customize via an App, Transparency Mode",
         price: 16.99,
         rating: 5,
-        image: "https://m.media-amazon.com/images/I/71F4+7rk2eL._AC_UY218_.jpg"
+        image: "https://m.media-amazon.com/images/I/51CnDMbXZzL._AC_UY218_.jpg"
      },
 
      {
@@ -65,5 +66,13 @@
        image: "https://m.media-amazon.com/images/I/71r+KgczQmL._AC_UY218_.jpg"
 
      },
-    
+    { 
+       id: "8",
+       title: "Gaming Monitor",
+       description: "ASUS ROG Swift 32” 4K OLED Gaming Monitor (PG32UCDM) - UHD (3840 x 2160), QD-OLED, 240Hz, 0.03ms, G-SYNC Compatible, Custom Heatsink, Graphene Film, 99% DCI-P3, True 10-bit, 90W USB-C",
+       price: 21.99,
+       rating: 4,
+       image: "https://m.media-amazon.com/images/I/91t16+g29KL._AC_UL320_.jpg"
+
+     },
 ]

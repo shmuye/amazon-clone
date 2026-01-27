@@ -13,6 +13,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import ProductDetail from './components/ProductDetail.jsx';
 import Footer from './components/Footer.jsx';
+import { products } from './data/products.js';
 
 
 const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -79,7 +80,7 @@ const App = () => {
                 <Route path='/product/:id' element={
                     <>
                       <Header />
-                      <ProductDetail />
+                      <ProductDetail { ...products} />
                     </>
                    
                 } />

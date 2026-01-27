@@ -1,8 +1,8 @@
 import React from 'react'
 import '../css/Home.css'
 import Product from "./Product.jsx";
-import { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { products } from '../data/products.js';
 
 const Home = ({ searchTerm }) => {
@@ -40,8 +40,8 @@ const filteredProducts =
                  onClick={prevImage}
                  className="slider_arrow left">
                     <ChevronLeft 
-                    color='#888'
-                       sx = {{ fontSize: 64 }} />
+                       color='#333'
+                       sx = {{ fontSize: 128 }} />
                 </div>
                <img
                    className="home_image"
@@ -52,8 +52,8 @@ const filteredProducts =
                    onClick={nextImage}
                    className="slider_arrow right">
                     <ChevronRight
-                       color='#888'
-                       sx = {{ fontSize: 64 }}
+                       color='#333'
+                       width={64}
                      />
                 </div>  
             </div>

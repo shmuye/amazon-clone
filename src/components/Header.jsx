@@ -1,11 +1,11 @@
-import { Search, ShoppingBasket } from '@mui/icons-material'
+import { MapPinIcon, Search, ShoppingCart } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import React from 'react'
 import "../css/Header.css"
 import { auth } from '../firebase.js'
 import { signOut } from 'firebase/auth'
 import {useStateValue} from "./StateProvider.jsx";
 import { getUserName } from '../utils/getUserName.js';
+
 
 const Header = () => {
     const [{ basket, user, searchTerm }, dispatch] = useStateValue()
@@ -34,15 +34,28 @@ const Header = () => {
                 alt="logo"
             />
             </Link>
+            <div className="header_optionAddress">
+                <MapPinIcon size={16} />
+                <div>
+                <span className="header_optionLineOne">
+                    Deliver to
+                </span>
+                <span className="header_optionLineTwo">
+                    Ethiopia
+                </span>
+                </div>
+                
+            </div>
             <div className="header_search">
                 <input
                     value={searchTerm}
                     onChange={handleSearch}
                     className="header_searchInput"
                     type="text"
-                    placeholder='Search Products'
+                    placeholder='Search Amazon'
                 />
-                <Search className="header_searchIcon" />
+                <Search 
+                 className="header_searchIcon" />
             </div>
             <div className="header_nav">
                 <Link to={!user && "/login"}>
@@ -77,7 +90,7 @@ const Header = () => {
                  </div>
                 <Link to= "/checkout">
                     <div className="header_optionBasket">
-                        <ShoppingBasket/>
+                        <ShoppingCart />
                         <span className="header_optionLineTwo header_basketCount">
                            { basket?.length}
                        </span>
