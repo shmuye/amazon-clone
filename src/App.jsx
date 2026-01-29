@@ -11,7 +11,6 @@ import Payment from './components/Payment.jsx';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import ProductDetail from './components/ProductDetail.jsx';
-import { products } from './data/products.js';
 import Layout from './components/Layout.jsx';
 
 
@@ -57,7 +56,7 @@ const App = () => {
                     <Elements stripe={promise}>        
                         <Payment/>
                     </Elements> }/>
-                    <Route path='/product/:id' element={ <ProductDetail { ...products} /> } />
+                    <Route path='/product/:id' element={ <ProductDetail  /> } />
             </Route>
         </Routes>
         </Router>

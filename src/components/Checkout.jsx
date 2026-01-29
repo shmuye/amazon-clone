@@ -10,14 +10,16 @@ const Checkout = () => {
     return (
         <div className="checkout">
             <div className="checkout_left">
-                  <img
+                  {/* <img
                       className="checkout_ad"
                       src="https://m.media-amazon.com/images/I/21DX0E62GJL.png"
                       alt=""
-                  />
+                  /> */}
                 <div className="checkout_right">
-                    <h3>Hello {getUserName(user)}</h3>
-                    <h2 className="checkout_title">Your Shopping Basket</h2>
+                    {/* <h3>Hello {getUserName(user)}</h3> */}
+                    <h2 className="checkout_title">
+                        Shopping Cart
+                    </h2>
                     {
                         basket.map(item => (
                             <CheckoutProduct

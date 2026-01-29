@@ -3,25 +3,26 @@ import { products } from "../data/products";
 import "../css/ProductDetail.css"
 import { useStateValue } from "./StateProvider";
 
-const ProductDetail = ({ productId, title, price, image, rating }) => {
+const ProductDetail = () => {
   const { id } = useParams();
-  const [{ basket }, dispatch] = useStateValue()
+  const [ { basket }, dispatch ] = useStateValue()
+  const product = products.find(p => p.id === id);
 
    const addToBasket = () => {
          dispatch({
 
                  type: "ADD_TO_BASKET",
                  item: {
-                     id: productId, 
-                     title,
-                     price,
-                     image,
-                     rating
+                     id: product.id,
+                     title: product.title,
+                     price: product.price,
+                     image: product.image,
+                     rating: product.rating
                  }
          })
     }
 
-  const product = products.find(p => p.id === id);
+  
 
   if (!product) {
     return <h2>Product not found</h2>;

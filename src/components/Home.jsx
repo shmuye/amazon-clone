@@ -61,7 +61,10 @@ const filteredProducts =
               <div className="home_row">
                  {filteredProducts.length > 0 ? (
                     filteredProducts.map(product => (
-                        <Product key={product.id} {...product} />
+                        <Product 
+                           key={product.id} 
+                           {...product} 
+                        />
                     ))
                 ) : (
                     <div className="no_results">
