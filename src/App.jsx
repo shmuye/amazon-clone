@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Header from './components/Header';   
 import Home from './components/Home';
 import Orders from './components/Orders.jsx';
 import Checkout from './components/Checkout';
@@ -12,8 +11,8 @@ import Payment from './components/Payment.jsx';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import ProductDetail from './components/ProductDetail.jsx';
-import Footer from './components/Footer.jsx';
 import { products } from './data/products.js';
+import Layout from './components/Layout.jsx';
 
 
 const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -49,42 +48,18 @@ const App = () => {
         <Router>
 
             <Routes>
-                <Route path="/orders" element={ 
-                    <>
-                      <Header />
-                      <Orders /> 
-                    </>
-                 } />
                 <Route path="/login" element={ <Auth /> } />
-                <Route path="/" element={
-                    <>
-                        <Header/>
-                        <Home searchTerm={searchTerm}/>
-                        <Footer />
-                    </>
-                }/>
-                <Route path="/Checkout" element={
-                    <>
-                        <Header/>
-                        <Checkout/>
-                    </> 
-                }/>
+            <Route element={<Layout />}>
+                <Route path="/orders" element={ <Orders /> } />
+                <Route path="/" element={<Home searchTerm={searchTerm}/>}/>
+                <Route path="/Checkout" element={<Checkout/> }/>
                 <Route path="/payment" element={
-                    <>
-                        <Header/>   
-                        <Elements stripe={promise}>        
-                            <Payment/>
-                        </Elements>
-                    </>
-                }/>
-                <Route path='/product/:id' element={
-                    <>
-                      <Header />
-                      <ProductDetail { ...products} />
-                    </>
-                   
-                } />
-            </Routes>
+                    <Elements stripe={promise}>        
+                        <Payment/>
+                    </Elements> }/>
+                    <Route path='/product/:id' element={ <ProductDetail { ...products} /> } />
+            </Route>
+        </Routes>
         </Router>
 
     )

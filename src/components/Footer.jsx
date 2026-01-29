@@ -6,12 +6,12 @@ const Footer = () => {
     const navigate = useNavigate()
   return (
     <footer className="footer">
-      {/* Back to top */}
+      
       <div className="footer_backToTop">
         <button onClick={() => navigate('/')}>Back to top</button>
       </div>
 
-      {/* Main footer links */}
+      
       <div className="footer_links">
         <div className="footer_column">
           <h4>Get to Know Us</h4>
