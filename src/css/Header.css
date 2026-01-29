@@ -4,7 +4,7 @@ body {
 
 }
 .header{
-    height: 60px;
+    height: 80px;
     display: flex;
     align-items: center;
     background-color: #131921;
@@ -28,22 +28,29 @@ body {
     gap: 4px;
     flex-direction: column;
 }
-.header_search{
+.header_search {
     display: flex;
     flex: 1;
     align-items: center;
     border-radius: 24px;
 
 }
+.header_fillter{
+    height: 36px;
+    border: none;
+    padding: 5px;
+    background-color: lightgray;
+}   
 .header_searchInput{
-    height: 12px;
+    height: 16px;
     padding: 10px;
     border: none;
     width: 100%;
+    
 }
 .header_searchIcon {
     padding: 5px;
-    height: 22px !important;
+    height: 26px !important;
     background-color: #cd9042;
     cursor: pointer;
 }

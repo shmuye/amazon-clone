@@ -4,6 +4,7 @@ import Subtotal from "./Subtotal.jsx";
 import {useStateValue} from "./StateProvider.jsx";
 import CheckoutProduct from "./CheckoutProduct.jsx";
 import { getUserName } from '../utils/getUserName.js';  
+
 const Checkout = () => {
     const [{ basket, user }, dispatch] = useStateValue()
     return (

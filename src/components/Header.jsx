@@ -47,6 +47,13 @@ const Header = () => {
                 
             </div>
             <div className="header_search">
+                <select className="header_fillter">
+                    <option value="all">All</option>
+                    <option value="books">Books</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="food">Food</option>  
+                </select>
                 <input
                     value={searchTerm}
                     onChange={handleSearch}
