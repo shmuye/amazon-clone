@@ -17,7 +17,8 @@ const ProductDetail = () => {
                      title: product.title,
                      price: product.price,
                      image: product.image,
-                     rating: product.rating
+                     rating: product.rating,
+                     description: product.description
                  }
          })
     }
