@@ -1,18 +1,43 @@
 import React from 'react'
 import '../css/Home.css'
 import Product from "./Product.jsx";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { products } from '../data/products.js';
+// import { products } from '../data/products.js';
+import { fetchProducts } from '../service/products.service.js';
 
 const Home = ({ searchTerm }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const Images = [
         "https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg",
         "https://m.media-amazon.com/images/I/71GGl3UpyOL._SX3000_.jpg",
         "https://m.media-amazon.com/images/I/71qcoYgEhzL._SX3000_.jpg",
     ];
+
+    useEffect(() => {
+         const loadProducts = async () => {
+            try {
+                const data = await fetchProducts()
+                setProducts(data)
+                
+            } catch (error) {
+                console.log("failed to load products", error)
+                
+            }finally {
+              setLoading(false)
+            }
+            
+            
+           
+         }
+
+         loadProducts()
+    }, [])
+
+    if(loading) return <p>Loading Products...</p>
 
 const filteredProducts =
     searchTerm.trim() === ""

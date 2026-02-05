@@ -52,7 +52,7 @@ const Header = () => {
                     <option value="books">Books</option>
                     <option value="electronics">Electronics</option>
                     <option value="clothes">Clothes</option>
-                    <option value="food">Food</option>  
+                    <option value="Beauty and personal care">Beauty & personal care</option>  
                 </select>
                 <input
                     value={searchTerm}
