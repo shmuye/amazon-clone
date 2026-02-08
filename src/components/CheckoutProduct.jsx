@@ -14,14 +14,14 @@ const CheckoutProduct = ({ id, image, title, description,  price, rating , hideB
     }
 
     return (
-        <div className="checkoutProduct_container">
-        <div className='checkoutProduct'>
-            <img className="checkoutProduct_image" src={image} alt="" />
-            <div className="checkoutProduct_info">
-                <p className="checkoutProduct_title">{title}</p>
-                <p className='checkoutProduct_description'>{description}</p>
-                <p className="checkoutProduct_rating">
-                    <span>Rating: </span>
+        <div className="flex">
+        <div className='flex items-center my-5 border-b border-b-gray-300'>
+            <img className="object-contain w-[180px] h-[180px]" src={image} alt="" />
+            <div className="pl-5">
+                <p className="text-[17px] font-bold ">{title}</p>
+                <p className=''>{description}</p>
+                <p className="flex items-center">
+                    <span className='mr-2'>Rating: </span>
                     {Array(rating).fill().map((_, i) => (
                         <p key={i}>⭐</p>
                     ))}
@@ -29,8 +29,11 @@ const CheckoutProduct = ({ id, image, title, description,  price, rating , hideB
                 {
                     !hideButton && (
                         <button
+                             
                              onClick={removeFromBasket}
-                             className="checkoutProduct_button">
+                             className="border-[1px] bg-[#f0c14b] mt-1 checkoutProduct_button text-[#111]
+                               border-t-[#a88734] border-r-[#9c7e31] border-b-[#846a29] cursor-pointer
+                             ">
                                 Remove from Basket
                     </button>
                     )

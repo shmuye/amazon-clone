@@ -1,4 +1,4 @@
-.home {
+/* .home {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,7 +23,7 @@
  
 
 .slider_arrow:hover{
-     /* background-color: rgba(0, 0, 0, 0.8); */
+  background-color: rgba(0, 0, 0, 0.8); 
 }
 
 .slider_arrow.left {
@@ -61,23 +61,23 @@
     color: #555;
 }
 
-/* 📱 Tablets and small devices */
+
 @media (max-width: 768px) {
   .home_image {
-    margin-bottom: -120px; /* reduce overlap */
+    margin-bottom: -120px; 
     min-height: 300px;
     object-fit: cover;
   }
 
   .slider_arrow {
-    top: 55%; /* push arrows slightly down */
+    top: 55%;
   }
 }
 
-/* 📱 Phones */
+
 @media (max-width: 480px) {
   .home_image {
-    margin-bottom: 0;      /* remove negative margin */
+    margin-bottom: 0;      
     min-height: 220px;
   }
 
@@ -91,4 +91,4 @@
 }
 
 
-
+ */

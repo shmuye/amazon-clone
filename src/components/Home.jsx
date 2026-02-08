@@ -39,14 +39,14 @@ const Home = ({ searchTerm }) => {
 
     if(loading) return <p>Loading Products...</p>
 
-const filteredProducts =
-    searchTerm.trim() === ""
-        ? products
-        : products.filter(product =>
-            product.title.toLowerCase().includes(
-                searchTerm.toLowerCase()
-            )
-        );
+// const filteredProducts =
+//     searchTerm.trim() === ""
+//         ? products
+//         : products.filter(product =>
+//             product.title.toLowerCase().includes(
+//                 searchTerm.toLowerCase()
+//             )
+//         );
     const prevImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === 0 ? Images.length - 1 : prevIndex - 1
@@ -58,12 +58,14 @@ const filteredProducts =
         );  
     }
     return (
-        <div className="home">
+        <div className="flex flex-col justify-center mx-auto max-w-[1500px]">
             <div 
-               className="home_container">
+               className="relative">
                 <div 
                  onClick={prevImage}
-                 className="slider_arrow left">
+                 className="absolute top-1/2 -translate-y-1/2 flex cursor-pointer z-[2]
+                            max-[768px]:top-[55%]
+                            max-[480px]:top-[60%] max-[480px]:text-[32px] left-[10px]">
                     <ChevronLeft 
                        color="#b9b" 
                        size={64} 
@@ -71,13 +73,18 @@ const filteredProducts =
                     />
                 </div>
                <img
-                   className="home_image"
+                   className="w-full z-[-1] mb-[-250px]
+                            [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1),rgba(0,0,0,0))]
+                             max-[768px]:mb-[-120px] max-[768px]:min-h-[300px] max-[768px]:object-cover
+                             max-[480px]:mb-0 max-[480px]:min-h-[220px]"
                    src={Images[currentImageIndex]}
                    alt="Home Banner"        
             />
                 <div 
                    onClick={nextImage}
-                   className="slider_arrow right">
+                   className="absolute top-1/2 -translate-y-1/2 flex cursor-pointer z-[2]
+                              max-[768px]:top-[55%]
+                              max-[480px]:top-[60%] max-[480px]:text-[32px] right-[10px]">
                     <ChevronRight 
                          color="#b9b" 
                          size={64} 
@@ -86,23 +93,13 @@ const filteredProducts =
                 </div>  
             </div>
 
-              <div className="home_row">
-                 {filteredProducts.length > 0 ? (
-                    filteredProducts.map(product => (
+              <div className="flex flex-wrap justify-center gap-5 z-[1] my-5 mx-[5px]">
+                 {products.map(product => (
                         <Product 
                            key={product.id} 
                            {...product} 
                         />
-                    ))
-                ) : (
-                    <div className="no_results">
-                        <h2>No product found</h2>
-                        <p>
-                            We couldn’t find any product matching
-                            <strong> "{searchTerm}"</strong>
-                        </p>
-                    </div>
-                )}
+                    ))}
             </div>
     </div>
     )

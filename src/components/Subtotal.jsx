@@ -19,20 +19,26 @@ const Subtotal = () => {
     );
 
     return (
-        <div className="subtotal">
+        <div className="flex flex-col justify-between w-[300px] gap-3 p-5 bg-white 
+                        rounded-[3px]">
             <p>
                 Subtotal ({ basket?.length} items):
                 <strong> {formattedValue}</strong>
             </p>
 
-            <small className="subtotal_gift">
-                <input type="checkbox" />
+            <small className="flex items-center">
+                <input 
+                className='mr-[5px]'
+                type="checkbox" />
                 This order contains a gift
             </small>
 
             <button
-            onClick={e => navigate("/payment")} 
-            >Proceed to Checkout</button>
+               className='bg-yellow-300 rounded-full w-full p-2 text-[#111] text-sm'
+               onClick={e => navigate("/payment")} 
+            >
+                Proceed to Checkout
+            </button>
         </div>
     );
 };
