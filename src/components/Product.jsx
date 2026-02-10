@@ -1,5 +1,3 @@
-import React from 'react'
-import "../css/Product.css"
 import {useStateValue} from "./StateProvider.jsx";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';

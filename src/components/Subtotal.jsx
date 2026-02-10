@@ -1,6 +1,4 @@
-import React from 'react';
 import { useNavigate } from "react-router-dom";
-import "../css/Subtotal.css";
 import {useStateValue} from "./StateProvider.jsx";
 import { getBasketTotal } from "../reducer.js";
 

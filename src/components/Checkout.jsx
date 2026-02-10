@@ -1,5 +1,3 @@
-import React from 'react'
-import "../css/Checkout.css"
 import Subtotal from "./Subtotal.jsx";
 import {useStateValue} from "./StateProvider.jsx";
 import CheckoutProduct from "./CheckoutProduct.jsx";

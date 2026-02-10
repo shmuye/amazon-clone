@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import {Link, useNavigate} from "react-router-dom"
-import '../css/Auth.css'
 import { auth } from '../firebase.js'
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-
-
 
 const Auth = () => {
     const navigate = useNavigate()

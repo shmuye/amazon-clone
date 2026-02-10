@@ -1,9 +1,6 @@
-import React from 'react'
-import '../css/Home.css'
 import Product from "./Product.jsx";
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-// import { products } from '../data/products.js';
 import { fetchProducts } from '../service/products.service.js';
 
 const Home = ({ searchTerm }) => {

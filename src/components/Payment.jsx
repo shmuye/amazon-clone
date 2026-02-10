@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useStateValue } from './StateProvider';
 import CheckoutProduct from './CheckoutProduct.jsx';
-import "../css/Payment.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { getBasketTotal } from '../reducer.js';

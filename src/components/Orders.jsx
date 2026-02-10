@@ -1,5 +1,4 @@
-import React from 'react'
-import '../css/Orders.css'
+
 import { useState, useEffect } from 'react'
 import { useStateValue } from './StateProvider.jsx'
 import Order from './Order.jsx' 

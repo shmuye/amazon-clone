@@ -1,8 +1,5 @@
-import React from 'react'
-import moment from 'moment'
-import CheckoutProduct from './CheckoutProduct.jsx'
-import '../css/Order.css'
 
+import moment from 'moment'
 const Order = ({ order }) => {
 
    const formattedValue = new Intl.NumberFormat("en-UK", {
