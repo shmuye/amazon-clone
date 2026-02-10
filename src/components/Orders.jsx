@@ -40,10 +40,10 @@ const Orders = () => {
   }, [user])    
 
   return (
-    <div className="orders">
-        <h1>Your Orders</h1>
+    <div className="max-w-[1200px] mx-auto my-0 py-[30px] px-5">
+        <h1 className='mb-[30px] text-[28px] font-medium'>Your Orders</h1>
 
-        <div className='orders_order'>
+        <div className='flex flex-col gap-[25px]'>
           {
             orders.map(order => (
             

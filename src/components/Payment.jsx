@@ -112,26 +112,30 @@ const Payment = () => {
          
 
 return (
-    <div className='payment'>
-        <div className='payment_container'>
-            <h1>
-               Checkout (<Link to="/checkout">{basket?.length} items</Link>)
+    <div className='bg-white'>
+        <div>
+            <h1 className='text-center p-[10px] font-normal bg-[#eaeded] border-b-[1px] border-gray-300'>
+               Checkout (<Link 
+               className='decoration-none'
+               to="/checkout">
+                {basket?.length} items
+             </Link>)
             </h1>
-        <div className="payment_section">
-            <div className="payment_title">
+        <div className="flex p-5 my-0 mx-5 border-b-[1px] border-gray-300">
+            <div className="flex-[0.2]">
              <h3>Delivery Address</h3>
             </div>
-            <div className="payement_address">
+            <div className="flex-[0.8]">
               <p>{user?.email}</p>
               <p>123 React Lane</p>
               <p>Los Angeles, CA</p>
             </div>
         </div>
-           <div className="payment_section">
-            <div className="payment_title">
+           <div className="flex p-5 my-0 mx-5 border-b-[1px] border-gray-300">
+            <div className="flex-[0.2]">
                 <h3>Review items and delivery</h3>
             </div>
-            <div className="payment_items">
+            <div className="flex-[0.8]">
                 {basket.map(item => (
                     <CheckoutProduct
                       key={item.id}
@@ -144,18 +148,24 @@ return (
                 ))}
             </div>
            </div>
-            <div className="payment_section">
-            <div className="payment_title">
+            <div className="flex p-5 my-0 mx-5 border-b-[1px] border-gray-300">
+            <div className="flex-[0.2]">
                 <h3>Payment Method</h3>
             </div>
-            <div className="payment_details">
+            <div className="flex-[0.8]">
                <form
+                 className='max-w-[400px]'
                  onSubmit={handleSubmit}
                >
                   <CardElement onChange={handleChange} />
                   <div className="payment_priceContainer">
-                    <h3>Order Total: {formattedValue}</h3>
-                    <button disabled={processing || disabled || succeeded || !clientSecret}>
+                    <h3 className='pb-5'>Order Total: {formattedValue}</h3>
+                    <button 
+                                    
+                    className=" w-full h-[30px] bg-[#f0c14b] rounded-[20px] border border-t-[#a88734] border-l-[#9c7e31]
+                        border-b-[#846a29] border-r-[#9c7e31] font-extrabold mt-[10px] text-[#111]"
+                    
+                    disabled={processing || disabled || succeeded || !clientSecret}>
                         <span>
                           {
                             processing ? (
