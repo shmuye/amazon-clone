@@ -162,7 +162,7 @@ return (
                     <button 
                                     
                     className=" w-full h-[30px] bg-[#f0c14b] rounded-[20px] border border-t-[#a88734] border-l-[#9c7e31]
-                        border-b-[#846a29] border-r-[#9c7e31] font-extrabold mt-[10px] text-[#111]"
+                        border-b-[#846a29] border-r-[#9c7e31] font-extrabold mt-[10px] text-[#111] cursor-pointer"
                     
                     disabled={processing || disabled || succeeded || !clientSecret}>
                         <span>

@@ -1,14 +1,30 @@
-import { MapPinIcon, Search, ShoppingCart, MenuIcon} from 'lucide-react'
+import { MapPinIcon, ShoppingCart, MenuIcon} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import {useStateValue} from "./StateProvider.jsx";
 import { getUserName } from '../utils/getUserName.js';
 import { logout } from '../service/auth.service.js'
 import SearchBar from './Search.jsx';
 import NavLink from './NavLink.jsx';
+import Sidebar from './Sidebar.jsx';
+import { useState } from 'react';
+
+
+const links = [
+    {"label": "Today's Deals", 'redirectURl': "/"  },
+    {"label": "Buy Again", 'redirectURl': "/"  },
+    {"label": "Browsing history", 'redirectURl': "/"  },
+    {"label": "Sell", 'redirectURl': "/"  },
+    {"label": "Gift Cards", 'redirectURl': "/"  },
+    {"label": "Gift Cards", 'redirectURl': "/"  },
+    {"label": "Customer service", 'redirectURl': "/"},
+    {"label": "Your amazon.com", 'redirectURl': "/"}
+
+]
 
 const Header = () => {
     
     const [{ basket, user }, dispatch] = useStateValue()
+    const [open, setOpen] = useState(false)
     console.log(user)
     
     const handleAuth = async () => {
@@ -24,7 +40,8 @@ const Header = () => {
     }
 
     return (
-        <div className="h-16 flex items-center bg-[#131921] sticky top-0 z-[100]">
+        <header>
+        <nav className="h-16 flex items-center bg-[#131921] sticky top-0 z-[100]">
             <Link to="/">
                 <img
                     className="w-[100px] mt-[18px] mx-[20px] object-contain"
@@ -69,7 +86,42 @@ const Header = () => {
                 </div>
             </Link>
             </div>
+        </nav>
+        <div className='bg-slate-800 text-white p-2 flex gap-3'>
+            <div className='flex items-center gap-1'>
+                <button 
+                   className='cursor-pointer'
+                   onClick={() => setOpen(!open)}
+                 >
+                   <MenuIcon  />
+                </button>
+
+                {/* {
+                    open && (
+                        <Sidebar />
+                    )
+                } */}
+               
+               <p className='font-bold'>All</p>
+            </div>
+            <button className='px-4 rounded-full bg-white text-black text-[12px] font-bold cursor-pointer'>
+                Rufus
+            </button>
+            <nav>
+                <ul className='flex items-center gap-3'>
+                   {
+                    links.map((link) => (
+                        <Link 
+                          key={link.label}
+                          to={link.redirectURl}>
+                            <li className='text-white text-[12px] font-semibold'>{link.label}</li>
+                        </Link>
+                    ))
+                   }
+                </ul>  
+            </nav>
         </div>
+    </header>
     )
 }
 export default Header
