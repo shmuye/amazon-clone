@@ -42,13 +42,13 @@ const SearchBar = () => {
         ))}
       </select>
       <input
-        className="outline-none border-none h-[40px] px-4 border-none w-full bg-white focus:ring-2 focus:ring-yellow-500"
+        className="outline-none  h-10 px-4 border-none w-full bg-white focus:ring-2 focus:ring-yellow-500"
         type="text"
         placeholder="Search Amazon"
       />
       <Search
         size={48}
-        className="rounded-r-sm p-[8px] h-[40px]  bg-[#cd9042] cursor-pointer focus:ring-2 focus:ring-yellow-500"
+        className="rounded-r-sm p-2 h-10  bg-[#cd9042] cursor-pointer focus:ring-2 focus:ring-yellow-500"
       />
     </div>
   );

@@ -4,68 +4,66 @@ import { useStateValue } from "./StateProvider";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [ { basket }, dispatch ] = useStateValue()
-  const product = products.find(p => p.id === id);
+  const [{ basket }, dispatch] = useStateValue();
+  const product = products.find((p) => p.id === id);
 
-   const addToBasket = () => {
-         dispatch({
-
-                 type: "ADD_TO_BASKET",
-                 item: {
-                     id: product.id,
-                     title: product.title,
-                     price: product.price,
-                     image: product.image,
-                     rating: product.rating,
-                     description: product.description
-                 }
-         })
-    }
-
-  
+  const addToBasket = () => {
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        rating: product.rating,
+        description: product.description,
+      },
+    });
+  };
 
   if (!product) {
     return <h2>Product not found</h2>;
   }
 
   return (
-    <div  className="
+    <div
+      className="
           flex items-start
-          gap-[20px]
-          p-[20px]
-          max-w-[800px]
+          gap-5
+          p-5
+          max-w-200
           m-0
           max-[900px]:flex-col
           max-[900px]:items-center
-        ">
-      <img 
-         src={product.image} 
-         alt={product.title} 
-         className="
-            w-[400px]
+        "
+    >
+      <img
+        src={product.image}
+        alt={product.title}
+        className="
+            w-100
             h-auto
             object-contain
-            max-[900px]:w-[300px]
+            max-[900px]:w-75
           "
-         
-         />
+      />
 
       <div className="flex flex-col flex-1">
         <h1 className="text-[24px]">{product.title}</h1>
         <p className="mt-1">{product.description}</p>
-        <div className="flex items-center gap-[4px]">
-               <span>Rating</span>
-                {
-                    Array(product.rating).fill().map((_, i) => (
-                        <p key={i}>⭐</p>
-                    ))
-                }
+        <div className="flex items-center gap-1">
+          <span>Rating</span>
+          {Array(product.rating)
+            .fill()
+            .map((_, i) => (
+              <p key={i}>⭐</p>
+            ))}
         </div>
         <p className="text-[22px] font-semibold">${product.price}</p>
         <button
-         className="
+          className="
             w-full
-            h-[30px]
+            h-7.5
             bg-[#f0c14b]
             rounded-[20px]
             border
@@ -74,11 +72,13 @@ const ProductDetail = () => {
             border-b-[#846a29]
             border-r-[#9c7e31]
             font-extrabold
-            mt-[4px]
+            mt-1
             text-[#111]
           "
           onClick={addToBasket}
-        >Add to Cart</button>
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );
