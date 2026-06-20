@@ -1,38 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "./StateProvider.jsx";
 import { getBasketTotal } from "../reducer.js";
+import { ROUTES } from "../constants/routes.js";
+import { formatCurrency } from "../utils/formatCurrency.js";
 
 const Subtotal = () => {
   const [{ basket }] = useStateValue();
   const navigate = useNavigate();
-
-  const formattedValue = new Intl.NumberFormat("en-UK", {
-    style: "currency",
-    currency: "USD",
-    currencyDisplay: "narrowSymbol",
-  }).format(getBasketTotal(basket));
+  const subtotal = getBasketTotal(basket);
 
   return (
-    <div
-      className="flex flex-col justify-between w-75 gap-3 p-5 bg-white 
-                        rounded-[3px]"
-    >
-      <p>
-        Subtotal ({basket?.length} items):
-        <strong> {formattedValue}</strong>
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-5 space-y-4">
+      <p className="text-lg text-gray-900">
+        Subtotal ({basket.length} {basket.length === 1 ? "item" : "items"}):
+      </p>
+      <p className="text-2xl font-bold text-[#b12704]">
+        {formatCurrency(subtotal)}
       </p>
 
-      <small className="flex items-center">
-        <input className="mr-1.25" type="checkbox" />
-        This order contains a gift
-      </small>
-
       <button
-        className="bg-yellow-300 rounded-full w-full p-2 text-[#111] text-sm"
-        onClick={(e) => navigate("/payment")}
+        type="button"
+        className="w-full bg-[#ffd814] hover:bg-[#f7ca00] border border-[#fcd200] rounded-full py-2.5 text-sm font-medium text-gray-900 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        onClick={() => navigate(ROUTES.PAYMENT)}
+        disabled={basket.length === 0}
       >
         Proceed to Checkout
       </button>
+
+      <p className="text-xs text-gray-500 text-center">
+        Taxes and shipping calculated at checkout
+      </p>
     </div>
   );
 };

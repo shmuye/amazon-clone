@@ -1,90 +1,107 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import { auth } from "../firebase.js";
+import { ROUTES } from "../constants/routes.js";
+import AmazonButton from "./ui/AmazonButton.jsx";
+import FormInput from "./ui/FormInput.jsx";
 
 const Auth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleSubmit = async (e, mode) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      if (mode === "signIn") {
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password);
+      }
+      navigate(ROUTES.HOME);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signIn = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((auth) => {
-        console.log(auth);
-        navigate("/");
-      })
-      .catch((error) => alert(error.message));
-  };
-  const register = (e) => {
-    e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
   return (
-    <div className="h-screen flex flex-col items-center">
-      <Link to="/">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#eaeded] px-4 py-8">
+      <Link to={ROUTES.HOME} className="mb-6">
         <img
-          className="my-5 mx-auto object-contain w-25"
+          className="w-28 object-contain"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
-          alt="logo"
+          alt="Amazon logo"
         />
       </Link>
-      <div className="w-75 flex flex-col p-5 border border-gray-300 rounded-[5px]">
-        <h2 className="font-medium mb-5 p-2.5">Sign In</h2>
-        <form>
-          <label className="block mb-1.5">Email</label>
-          <input
-            className="h-7.5 mb-2.5 bg-white w-[98%] border border-gray-300 px-2"
-            onChange={handleEmailChange}
-            type="text"
+
+      <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 shadow-sm p-6 sm:p-8">
+        <h1 className="text-2xl font-semibold mb-6">Sign in</h1>
+
+        <form onSubmit={(e) => handleSubmit(e, "signIn")} className="space-y-4">
+          <FormInput
+            id="email"
+            label="Email"
+            type="email"
             value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
           />
-          <label className="block mb-1.5">Password</label>
-          <input
-            className="h-7.5 mb-2.5 bg-white w-[98%] border border-gray-300 px-2"
-            onChange={handlePasswordChange}
+
+          <FormInput
+            id="password"
+            label="Password"
             type="password"
             value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
           />
-          <button onClick={signIn} className="login_signInButton" type="submit">
-            Sign in
-          </button>
+
+          {error && (
+            <p className="text-red-600 text-sm" role="alert">
+              {error}
+            </p>
+          )}
+
+          <AmazonButton
+            type="submit"
+            className="w-full py-2.5 font-medium"
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign in"}
+          </AmazonButton>
         </form>
-        <p className="mt-4 text-xs">
-          By signing-in you agree to Amazon clone's Conditions of Use and Sale.
-          Please see our Privacy Notice, our Cookies Notice and our
-          Interest-Based Ads Notice..'
+
+        <p className="mt-5 text-xs text-gray-600 leading-relaxed">
+          By signing in you agree to our Conditions of Use and Privacy Notice.
         </p>
-        <button
-          onClick={register}
-          className="bg-[#f0c14b] rounded-sm w-full h-7.5 border mt-2.5
-         border-[#a88734] border-b-[#846a29] border-r-[#9c7e31]"
-          type="submit"
-        >
-          Create your Amazon Account
-        </button>
+
+        <div className="border-t border-gray-200 mt-6 pt-6">
+          <p className="text-sm text-gray-700 mb-3">New to Amazon Clone?</p>
+          <AmazonButton
+            type="button"
+            onClick={(e) => handleSubmit(e, "register")}
+            className="w-full py-2.5"
+            disabled={loading}
+          >
+            Create your account
+          </AmazonButton>
+        </div>
       </div>
     </div>
   );
 };
+
 export default Auth;

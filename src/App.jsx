@@ -1,66 +1,68 @@
-import React, { useEffect } from 'react'
-import Home from './components/Home';
-import Orders from './components/Orders.jsx';
-import Checkout from './components/Checkout';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+import { auth } from "./firebase.js";
+import { useStateValue } from "./components/StateProvider.jsx";
+import { ACTIONS } from "./constants/actions.js";
+import { ROUTES } from "./constants/routes.js";
+import Home from "./components/Home.jsx";
+import Orders from "./components/Orders.jsx";
+import Checkout from "./components/Checkout.jsx";
 import Auth from "./components/Auth.jsx";
-import { auth } from './firebase.js';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useStateValue } from './components/StateProvider.jsx';
-import Payment from './components/Payment.jsx';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import ProductDetail from './components/ProductDetail.jsx';
-import Layout from './components/Layout.jsx';
+import Payment from "./components/Payment.jsx";
+import ProductDetail from "./components/ProductDetail.jsx";
+import Layout from "./components/Layout.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const promise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const App = () => {
+  const [{ searchTerm }, dispatch] = useStateValue();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      dispatch({
+        type: ACTIONS.SET_USER,
+        user: authUser ?? null,
+      });
+    });
 
-const App = () => { 
+    return unsubscribe;
+  }, [dispatch]);
 
-    const [ { searchTerm }, dispatch ] = useStateValue()
+  return (
+    <Router>
+      <Routes>
+        <Route path={ROUTES.LOGIN} element={<Auth />} />
+        <Route element={<Layout />}>
+          <Route path={ROUTES.HOME} element={<Home searchTerm={searchTerm} />} />
+          <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
+          <Route
+            path={ROUTES.PAYMENT}
+            element={
+              <ProtectedRoute>
+                <Elements stripe={stripePromise}>
+                  <Payment />
+                </Elements>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.ORDERS}
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route path={`${ROUTES.PRODUCT}/:id`} element={<ProductDetail />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
 
-    useEffect(()=>{
-       onAuthStateChanged(auth, authUser => {
-
-        console.log("the user is >>> ", authUser)
-
-        if(authUser){
-
-            dispatch({
-                type: "SET_USER",
-                user: authUser
-            })
-
-        }else {
-
-            dispatch({
-                type: "SET_USER",
-                user: null
-            })
-
-        }
-       })
-    }, [])
-    return (
-        <Router>
-
-            <Routes>
-                <Route path="/login" element={ <Auth /> } />
-            <Route element={<Layout />}>
-                <Route path="/orders" element={ <Orders /> } />
-                <Route path="/" element={<Home searchTerm={searchTerm}/>}/>
-                <Route path="/Checkout" element={<Checkout/> }/>
-                <Route path="/payment" element={
-                    <Elements stripe={promise}>        
-                        <Payment/>
-                    </Elements> }/>
-                    <Route path='/product/:id' element={ <ProductDetail  /> } />
-            </Route>
-        </Routes>
-        </Router>
-
-    )
-}
-export default App
+export default App;

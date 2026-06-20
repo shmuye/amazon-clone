@@ -1,34 +1,57 @@
 import Subtotal from "./Subtotal.jsx";
 import { useStateValue } from "./StateProvider.jsx";
 import CheckoutProduct from "./CheckoutProduct.jsx";
+import EmptyState from "./ui/EmptyState.jsx";
+import { ROUTES } from "../constants/routes.js";
 
 const Checkout = () => {
-  const [{ basket, user }, dispatch] = useStateValue();
-  return (
-    <div className="flex items-start m-2 flex-col md:flex-row gap-10 p-5">
-      <div className="">
-        <div className="bg-white p-4">
-          <div className="p-3 flex justify-between border-b border-gray-300">
-            <h2 className="text-2xl self-start font-semibold">Shopping Cart</h2>
-            <p className="text-sm self-end">Price</p>
-          </div>
+  const [{ basket }] = useStateValue();
 
-          {basket.map((item) => (
-            <CheckoutProduct
-              id={item.id}
-              title={item.title}
-              image={item.image}
-              price={item.price}
-              rating={item.rating}
-              description={item.description}
-            />
-          ))}
-        </div>
+  if (basket.length === 0) {
+    return (
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-8">
+        <EmptyState
+          title="Your cart is empty"
+          description="Browse our products and add items to your cart before checking out."
+          actionLabel="Start shopping"
+          actionTo={ROUTES.HOME}
+        />
       </div>
-      <div className="bg-white">
-        <Subtotal />
+    );
+  }
+
+  return (
+    <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <h1 className="text-2xl sm:text-3xl font-semibold mb-6">Shopping Cart</h1>
+
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        <div className="flex-1 w-full">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <div className="hidden sm:flex justify-between px-6 py-3 border-b border-gray-200 text-sm text-gray-600">
+              <span>Product</span>
+              <span>Price</span>
+            </div>
+
+            {basket.map((item, index) => (
+              <CheckoutProduct
+                key={`${item.id}-${index}`}
+                id={item.id}
+                title={item.title}
+                image={item.image}
+                price={item.price}
+                rating={item.rating}
+                description={item.description}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full lg:w-80 shrink-0 lg:sticky lg:top-20">
+          <Subtotal />
+        </div>
       </div>
     </div>
   );
 };
+
 export default Checkout;

@@ -1,27 +1,29 @@
-import Product from "./Product.jsx";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchProducts } from "../service/products.service.js";
 import Loader from "./Loader.jsx";
+import Product from "./Product.jsx";
 
-const Home = ({ searchTerm }) => {
+const HERO_IMAGES = [
+  "https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/71GGl3UpyOL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/71qcoYgEhzL._SX3000_.jpg",
+];
+
+const Home = ({ searchTerm = "" }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const Images = [
-    "https://m.media-amazon.com/images/I/81mLoEvjbEL._SX3000_.jpg",
-    "https://m.media-amazon.com/images/I/71GGl3UpyOL._SX3000_.jpg",
-    "https://m.media-amazon.com/images/I/71qcoYgEhzL._SX3000_.jpg",
-  ];
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const data = await fetchProducts();
         setProducts(data);
-      } catch (error) {
-        console.log("failed to load products", error);
+      } catch (err) {
+        setError("Failed to load products. Please try again later.");
+        console.error("Failed to load products:", err);
       } finally {
         setLoading(false);
       }
@@ -30,51 +32,85 @@ const Home = ({ searchTerm }) => {
     loadProducts();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
   if (loading) return <Loader />;
 
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? Images.length - 1 : prevIndex - 1,
-    );
-  };
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Images.length);
-  };
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredProducts = normalizedSearch
+    ? products.filter((product) =>
+        product.title?.toLowerCase().includes(normalizedSearch),
+      )
+    : products;
+
   return (
-    <div className="flex flex-col justify-center mx-auto max-w-375">
-      <div className="relative">
-        <div
-          onClick={prevImage}
-          className="absolute top-1/2 -translate-y-1/2 flex cursor-pointer z-2
-                            max-[768px]:top-[55%]
-                            max-[480px]:top-[60%] max-[480px]:text-[32px] left-2.5"
-        >
-          <ChevronLeft color="#b9b" size={64} strokeWidth={1} />
-        </div>
+    <div className="pb-8">
+      <div className="relative max-h-[400px] sm:max-h-[500px] overflow-hidden">
         <img
-          className="w-full z-[-1] mb-[-250px]
-                            [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1),rgba(0,0,0,0))]
-                             max-[768px]:mb-[-120px] max-[768px]:min-h-[300px] max-[768px]:object-cover
-                             max-[480px]:mb-0 max-[480px]:min-h-[220px]"
-          src={Images[currentImageIndex]}
-          alt="Home Banner"
+          className="w-full h-[220px] sm:h-[320px] lg:h-[400px] object-cover object-center
+            [mask-image:linear-gradient(to_bottom,black_60%,transparent)]"
+          src={HERO_IMAGES[currentImageIndex]}
+          alt="Featured deals banner"
         />
-        <div
-          onClick={nextImage}
-          className="absolute top-1/2 -translate-y-1/2 flex cursor-pointer z-2
-                              max-[768px]:top-[55%]
-                              max-[480px]:top-[60%] max-[480px]:text-[32px] right-2.5"
+        <button
+          type="button"
+          onClick={() =>
+            setCurrentImageIndex((i) =>
+              i === 0 ? HERO_IMAGES.length - 1 : i - 1,
+            )
+          }
+          aria-label="Previous banner"
+          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white shadow transition-colors cursor-pointer"
         >
-          <ChevronRight color="#b9b" size={64} strokeWidth={1} />
-        </div>
+          <ChevronLeft size={28} />
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            setCurrentImageIndex((i) => (i + 1) % HERO_IMAGES.length)
+          }
+          aria-label="Next banner"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white shadow transition-colors cursor-pointer"
+        >
+          <ChevronRight size={28} />
+        </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-5 z-1 my-5 mx-1.25">
-        {products.map((product) => (
-          <Product key={product.id} {...product} />
-        ))}
+      <div className="max-w-[1500px] mx-auto px-3 sm:px-6 -mt-16 sm:-mt-24 lg:-mt-32 relative z-10">
+        {error && (
+          <p
+            className="text-center text-red-600 my-4 bg-white rounded-lg py-3 shadow-sm"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
+
+        {searchTerm && (
+          <p className="text-sm text-gray-700 mb-4 bg-white/90 inline-block px-3 py-1 rounded-full shadow-sm">
+            Showing results for &ldquo;{searchTerm}&rdquo;
+          </p>
+        )}
+
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            {filteredProducts.map((product) => (
+              <Product key={product.id} {...product} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-600 py-12 bg-white rounded-lg shadow-sm">
+            No products match &ldquo;{searchTerm}&rdquo;.
+          </p>
+        )}
       </div>
     </div>
   );
 };
+
 export default Home;

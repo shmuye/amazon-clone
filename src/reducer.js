@@ -1,49 +1,41 @@
+import { ACTIONS } from "./constants/actions.js";
+
 export const initialState = {
-    basket: [],
-    user: null,
-}
+  basket: [],
+  user: null,
+  searchTerm: "",
+};
 
-// selector
-
-export const getBasketTotal = (basket) => {
-    return basket.reduce((amount, item) => amount + item.price, 0)
-}
+export const getBasketTotal = (basket) =>
+  basket.reduce((total, item) => total + item.price, 0);
 
 export const reducer = (state, action) => {
-    console.log(action)
-    switch (action.type) {
-        case "ADD_TO_BASKET":
-            return {
-                ...state,
-                   basket:  [...state.basket, action.item] }
-        case "REMOVE_FROM_BASKET":
-           {
-            const index = state.basket.findIndex(item => item.id === action.id)
-            const newBasket = [...state.basket]
-            if (index >= 0) {
-                newBasket.splice(index, 1)
-            } else {
-                console.warn("item not found")
-            }
+  switch (action.type) {
+    case ACTIONS.ADD_TO_BASKET:
+      return {
+        ...state,
+        basket: [...state.basket, action.item],
+      };
 
-                return {
-                    ...state,
-                    basket: newBasket
-            }}
-        case 'EMPTY_BASKET':
-            return {
-                ...state,
-                basket: []
-            }   
+    case ACTIONS.REMOVE_FROM_BASKET: {
+      const index = state.basket.findIndex((item) => item.id === action.id);
+      if (index < 0) return state;
 
-        case "SET_USER":
-            return {
-                ...state,
-                user: action.user
-            }  
-        
-        default:
-            return state;
-
+      const newBasket = [...state.basket];
+      newBasket.splice(index, 1);
+      return { ...state, basket: newBasket };
     }
-}
+
+    case ACTIONS.EMPTY_BASKET:
+      return { ...state, basket: [] };
+
+    case ACTIONS.SET_USER:
+      return { ...state, user: action.user };
+
+    case ACTIONS.SET_SEARCH:
+      return { ...state, searchTerm: action.searchTerm };
+
+    default:
+      return state;
+  }
+};

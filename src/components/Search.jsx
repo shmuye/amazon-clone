@@ -1,55 +1,34 @@
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-const categories = [
-  { value: "all", label: "All" },
-  { value: "books", label: "Books" },
-  { value: "electronics", label: "Electronics" },
-  { value: "clothes", label: "Clothes" },
-  { value: "beauty", label: "Beauty & personal care" },
-];
+import { useStateValue } from "./StateProvider.jsx";
+import { ACTIONS } from "../constants/actions.js";
 
 const SearchBar = () => {
-  const spanRef = useRef(null);
-  const [selected, setSelected] = useState("All");
-  const [width, setWidth] = useState(0);
+  const [{ searchTerm }, dispatch] = useStateValue();
 
-  useEffect(() => {
-    if (spanRef.current) {
-      setWidth(spanRef.current.offsetWidth + 24);
-    }
-  }, [selected]);
+  const handleSearchChange = (e) => {
+    dispatch({
+      type: ACTIONS.SET_SEARCH,
+      searchTerm: e.target.value,
+    });
+  };
 
   return (
-    <div className="flex flex-1 items-center">
-      <span
-        ref={spanRef}
-        className="absolute invisible whitespace-nowrap text-[12px] px-2"
-      >
-        {selected}
-      </span>
-
-      <select
-        value={selected}
-        onChange={(e) => setSelected(e.target.value)}
-        style={{ width }}
-        className="w-auto px-2 rounded-l-sm outline-none left-0 text-[12px]  h-[40px] border-r bg-gray-300 border-gray-500 focus:ring-2 focus:ring-yellow-500"
-      >
-        {categories.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
+    <div className="flex flex-1 items-stretch rounded-md overflow-hidden h-10">
       <input
-        className="outline-none  h-10 px-4 border-none w-full bg-white focus:ring-2 focus:ring-yellow-500"
-        type="text"
-        placeholder="Search Amazon"
+        className="flex-1 min-w-0 px-3 sm:px-4 text-sm text-gray-900 bg-white border-0 outline-none focus:ring-2 focus:ring-[#f0c14b] focus:ring-inset"
+        type="search"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search products"
+        aria-label="Search products"
       />
-      <Search
-        size={48}
-        className="rounded-r-sm p-2 h-10  bg-[#cd9042] cursor-pointer focus:ring-2 focus:ring-yellow-500"
-      />
+      <button
+        type="button"
+        className="bg-[#febd69] hover:bg-[#f3a847] px-3 sm:px-4 flex items-center justify-center transition-colors cursor-pointer"
+        aria-label="Search"
+      >
+        <Search size={20} className="text-gray-900" aria-hidden="true" />
+      </button>
     </div>
   );
 };

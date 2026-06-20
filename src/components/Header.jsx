@@ -1,99 +1,90 @@
-import { MapPinIcon, ShoppingCart, MenuIcon } from "lucide-react";
+import { MapPinIcon, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider.jsx";
 import { getUserName } from "../utils/getUserName.js";
 import { logout } from "../service/auth.service.js";
+import { ROUTES } from "../constants/routes.js";
 import SearchBar from "./Search.jsx";
 import NavLink from "./NavLink.jsx";
-import { useState } from "react";
-
-const links = [
-  { label: "Today's Deals", redirectURl: "/" },
-  { label: "Buy Again", redirectURl: "/" },
-  { label: "Browsing history", redirectURl: "/" },
-  { label: "Sell", redirectURl: "/" },
-  { label: "Gift Cards", redirectURl: "/" },
-  { label: "Gift Cards", redirectURl: "/" },
-  { label: "Customer service", redirectURl: "/" },
-  { label: "Your amazon.com", redirectURl: "/" },
-];
 
 const Header = () => {
-  const [{ basket, user }, dispatch] = useStateValue();
-  const [open, setOpen] = useState(false);
-  console.log(user);
+  const [{ basket, user }] = useStateValue();
 
   const handleAuth = async () => {
     if (!user) return;
     try {
       await logout();
     } catch (error) {
-      console.log(error);
+      console.error("Logout failed:", error);
     }
   };
 
   return (
-    <header>
-      <nav className="h-16 flex items-center bg-[#131921] sticky top-0 z-[100]">
-        <Link to="/">
-          <img
-            className="w-25 mt-4.5 mx-5 object-contain"
-            src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
-            alt="Amazon HomePage logo"
-          />
-        </Link>
-        <div className="flex items-end mr-2.5 text-white">
-          <MapPinIcon size={16} />
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-light"> Deliver to </span>
-            <span className="text-[13px] font-semibold"> Ethiopia </span>
-          </div>
-        </div>
-        <SearchBar />
-        <div className="flex justify-evenly">
-          <NavLink
-            redirectURL={user ? "/" : "/login"}
-            onClick={handleAuth}
-            upper={`Hello ${user ? getUserName(user) : "Guest"}`}
-            lower={user ? "Sign Out" : "Sign In"}
-          />
+    <header className="bg-[#131921] sticky top-0 z-50 shadow-md">
+      <div className="max-w-[1500px] mx-auto px-3 sm:px-4">
+        <nav className="flex items-center gap-2 sm:gap-4 min-h-14 sm:min-h-16 py-2">
+          <Link to={ROUTES.HOME} className="shrink-0">
+            <img
+              className="w-20 sm:w-24 object-contain"
+              src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
+              alt="Amazon homepage logo"
+            />
+          </Link>
 
-          <NavLink redirectURL="/orders" upper="Returns" lower="Orders" />
-
-          <NavLink upper="Your" lower="Prime" />
-          <Link to="/checkout">
-            <div className="flex items-center text-white">
-              <ShoppingCart />
-              <span className="text-[13px] font-semibold mx-2.5">
-                {basket?.length}
+          <div className="hidden md:flex items-end text-white shrink-0">
+            <MapPinIcon size={18} aria-hidden="true" className="mb-0.5" />
+            <div className="flex flex-col ml-1">
+              <span className="text-[10px] font-light leading-tight">
+                Deliver to
+              </span>
+              <span className="text-xs font-semibold leading-tight">
+                United States
               </span>
             </div>
-          </Link>
-        </div>
-      </nav>
-      <div className="bg-slate-800 text-white p-2 flex gap-3">
-        <div className="flex items-center gap-1">
-          <button className="cursor-pointer" onClick={() => setOpen(!open)}>
-            <MenuIcon />
-          </button>
-          <p className="font-bold">All</p>
-        </div>
-        <button className="px-4 rounded-full bg-white text-black text-[12px] font-bold cursor-pointer">
-          Rufus
-        </button>
-        <nav>
-          <ul className="flex items-center gap-3">
-            {links.map((link) => (
-              <Link key={link.label} to={link.redirectURl}>
-                <li className="text-white text-[12px] font-semibold">
-                  {link.label}
-                </li>
-              </Link>
-            ))}
-          </ul>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <SearchBar />
+          </div>
+
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            <div className="hidden sm:block">
+              <NavLink
+                redirectURL={user ? ROUTES.HOME : ROUTES.LOGIN}
+                onClick={handleAuth}
+                upper={`Hello, ${user ? getUserName(user) : "Guest"}`}
+                lower={user ? "Sign Out" : "Sign In"}
+              />
+            </div>
+
+            <div className="sm:hidden">
+              <NavLink
+                redirectURL={user ? ROUTES.HOME : ROUTES.LOGIN}
+                onClick={handleAuth}
+                upper={user ? getUserName(user) : "Sign In"}
+                lower={user ? "Sign Out" : "Account"}
+              />
+            </div>
+
+            <NavLink
+              redirectURL={ROUTES.ORDERS}
+              upper="Returns"
+              lower="Orders"
+            />
+
+            <Link
+              to={ROUTES.CHECKOUT}
+              className="flex items-center text-white px-2 py-1 rounded hover:outline hover:outline-1 hover:outline-white/40"
+              aria-label={`Cart, ${basket.length} items`}
+            >
+              <ShoppingCart size={28} aria-hidden="true" />
+              <span className="text-sm font-bold ml-1">{basket.length}</span>
+            </Link>
+          </div>
         </nav>
       </div>
     </header>
   );
 };
+
 export default Header;
