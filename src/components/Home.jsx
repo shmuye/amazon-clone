@@ -103,6 +103,16 @@ const Home = ({ searchTerm = "" }) => {
               <Product key={product.id} {...product} />
             ))}
           </div>
+        ) : products.length === 0 ? (
+          <p className="text-center text-gray-600 py-12 bg-white rounded-lg shadow-sm">
+            No products available. Add products to your Firestore{" "}
+            <code className="text-sm bg-gray-100 px-1 rounded">products</code>{" "}
+            collection, or run{" "}
+            <code className="text-sm bg-gray-100 px-1 rounded">
+              npm run seed:products
+            </code>
+            .
+          </p>
         ) : (
           <p className="text-center text-gray-600 py-12 bg-white rounded-lg shadow-sm">
             No products match &ldquo;{searchTerm}&rdquo;.
