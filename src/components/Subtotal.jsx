@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "./StateProvider.jsx";
-import { getBasketTotal } from "../reducer.js";
+import { getBasketTotal, getBasketItemCount } from "../reducer.js";
 import { ROUTES } from "../constants/routes.js";
 import { formatCurrency } from "../utils/formatCurrency.js";
 
 const Subtotal = () => {
   const [{ basket }] = useStateValue();
   const navigate = useNavigate();
+  const itemCount = getBasketItemCount(basket);
   const subtotal = getBasketTotal(basket);
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-5 space-y-4">
       <p className="text-lg text-gray-900">
-        Subtotal ({basket.length} {basket.length === 1 ? "item" : "items"}):
+        Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"}):
       </p>
       <p className="text-2xl font-bold text-[#b12704]">
         {formatCurrency(subtotal)}

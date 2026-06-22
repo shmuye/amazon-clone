@@ -58,14 +58,15 @@ const Order = ({ order }) => {
             Items
           </h3>
           <div className="divide-y divide-gray-100">
-            {order.data.basket?.map((item, index) => (
+            {order.data.basket?.map((item) => (
               <CheckoutProduct
-                key={`${item.id}-${index}`}
+                key={item.id}
                 id={item.id}
                 title={item.title}
                 image={item.image}
                 price={item.price}
                 rating={item.rating}
+                quantity={item.quantity}
                 hideButton
               />
             ))}

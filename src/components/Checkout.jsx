@@ -27,20 +27,21 @@ const Checkout = () => {
       <div className="flex flex-col lg:flex-row gap-6 items-start">
         <div className="flex-1 w-full">
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <div className="hidden sm:flex justify-between px-6 py-3 border-b border-gray-200 text-sm text-gray-600">
+            <div className="hidden sm:grid grid-cols-[1fr_auto] px-6 py-3 border-b border-gray-200 text-sm text-gray-600">
               <span>Product</span>
-              <span>Price</span>
+              <span>Subtotal</span>
             </div>
 
-            {basket.map((item, index) => (
+            {basket.map((item) => (
               <CheckoutProduct
-                key={`${item.id}-${index}`}
+                key={item.id}
                 id={item.id}
                 title={item.title}
                 image={item.image}
                 price={item.price}
                 rating={item.rating}
                 description={item.description}
+                quantity={item.quantity}
               />
             ))}
           </div>

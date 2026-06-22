@@ -1,7 +1,8 @@
 import { useStateValue } from "./StateProvider.jsx";
 import { ACTIONS } from "../constants/actions.js";
+import { getItemQuantity } from "../reducer.js";
 import StarRating from "./StarRating.jsx";
-import AmazonButton from "./ui/AmazonButton.jsx";
+import QuantitySelector from "./ui/QuantitySelector.jsx";
 import { formatCurrency } from "../utils/formatCurrency.js";
 
 const CheckoutProduct = ({
@@ -11,9 +12,20 @@ const CheckoutProduct = ({
   description,
   price,
   rating,
+  quantity = 1,
   hideButton,
 }) => {
   const [, dispatch] = useStateValue();
+  const qty = getItemQuantity({ quantity });
+  const lineTotal = price * qty;
+
+  const setQuantity = (nextQuantity) => {
+    dispatch({
+      type: ACTIONS.SET_BASKET_QUANTITY,
+      id,
+      quantity: nextQuantity,
+    });
+  };
 
   const removeFromBasket = () => {
     dispatch({
@@ -40,19 +52,27 @@ const CheckoutProduct = ({
             <StarRating rating={rating} />
           </div>
         )}
-        {!hideButton && (
-          <AmazonButton
-            onClick={removeFromBasket}
-            className="mt-3 px-3 py-1.5 text-xs"
-          >
-            Remove
-          </AmazonButton>
+
+        {!hideButton ? (
+          <QuantitySelector
+            quantity={qty}
+            onDecrease={() => setQuantity(qty - 1)}
+            onIncrease={() => setQuantity(qty + 1)}
+            onRemove={removeFromBasket}
+          />
+        ) : (
+          <QuantitySelector quantity={qty} readOnly />
         )}
       </div>
 
-      <p className="font-bold text-gray-900 sm:text-right shrink-0">
-        {formatCurrency(price)}
-      </p>
+      <div className="sm:text-right shrink-0">
+        <p className="font-bold text-gray-900">{formatCurrency(lineTotal)}</p>
+        {qty > 1 && (
+          <p className="text-xs text-gray-500 mt-1">
+            {formatCurrency(price)} each
+          </p>
+        )}
+      </div>
     </div>
   );
 };

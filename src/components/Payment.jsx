@@ -9,7 +9,7 @@ import CheckoutSection from "./checkout/CheckoutSection.jsx";
 import ShippingForm from "./checkout/ShippingForm.jsx";
 import AmazonButton from "./ui/AmazonButton.jsx";
 import EmptyState from "./ui/EmptyState.jsx";
-import { getBasketTotal } from "../reducer.js";
+import { getBasketTotal, getBasketItemCount } from "../reducer.js";
 import { ACTIONS } from "../constants/actions.js";
 import { ROUTES } from "../constants/routes.js";
 import { formatCurrency } from "../utils/formatCurrency.js";
@@ -40,6 +40,7 @@ const Payment = () => {
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
 
+  const itemCount = getBasketItemCount(basket);
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -167,7 +168,7 @@ const Payment = () => {
         <p className="text-sm text-gray-600 mt-1">
           Review your order (
           <Link to={ROUTES.CHECKOUT} className="text-[#007185] hover:underline">
-            {basket.length} {basket.length === 1 ? "item" : "items"}
+            {itemCount} {itemCount === 1 ? "item" : "items"}
           </Link>
           )
         </p>
@@ -184,14 +185,15 @@ const Payment = () => {
 
         <CheckoutSection step="2" title="Review your items">
           <div className="divide-y divide-gray-200 -mx-4 sm:-mx-6">
-            {basket.map((item, index) => (
-              <div key={`${item.id}-${index}`} className="px-4 sm:px-6">
+            {basket.map((item) => (
+              <div key={item.id} className="px-4 sm:px-6">
                 <CheckoutProduct
                   id={item.id}
                   title={item.title}
                   image={item.image}
                   price={item.price}
                   rating={item.rating}
+                  quantity={item.quantity}
                   hideButton
                 />
               </div>
@@ -218,7 +220,7 @@ const Payment = () => {
 
           <div className="mt-6 p-4 bg-[#f7fafa] rounded-md border border-gray-200">
             <div className="flex justify-between text-sm mb-2">
-              <span>Items ({basket.length})</span>
+              <span>Items ({itemCount})</span>
               <span>{formatCurrency(getBasketTotal(basket))}</span>
             </div>
             <div className="flex justify-between text-sm mb-2 text-green-700">

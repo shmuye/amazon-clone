@@ -4,11 +4,13 @@ import { useStateValue } from "./StateProvider.jsx";
 import { getUserName } from "../utils/getUserName.js";
 import { logout } from "../service/auth.service.js";
 import { ROUTES } from "../constants/routes.js";
+import { getBasketItemCount } from "../reducer.js";
 import SearchBar from "./Search.jsx";
 import NavLink from "./NavLink.jsx";
 
 const Header = () => {
   const [{ basket, user }] = useStateValue();
+  const cartCount = getBasketItemCount(basket);
 
   const handleAuth = async () => {
     if (!user) return;
@@ -75,10 +77,10 @@ const Header = () => {
             <Link
               to={ROUTES.CHECKOUT}
               className="flex items-center text-white px-2 py-1 rounded hover:outline hover:outline-1 hover:outline-white/40"
-              aria-label={`Cart, ${basket.length} items`}
+              aria-label={`Cart, ${cartCount} items`}
             >
               <ShoppingCart size={28} aria-hidden="true" />
-              <span className="text-sm font-bold ml-1">{basket.length}</span>
+              <span className="text-sm font-bold ml-1">{cartCount}</span>
             </Link>
           </div>
         </nav>
