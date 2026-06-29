@@ -40,7 +40,7 @@ const Header = () => {
                 Deliver to
               </span>
               <span className="text-xs font-semibold leading-tight">
-                United States
+                Ethiopia
               </span>
             </div>
           </div>
